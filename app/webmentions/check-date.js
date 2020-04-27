@@ -5,25 +5,28 @@ const fs = require('fs');
 exports.checkDate = function checkDate(feedItems) {
     const lastFetch = fs.readFileSync(appRootDirectory + '/data/lastFetchDate.json');
     const lastSent = JSON.parse(lastFetch);
-
-    logger.info(lastSent.time);
+    const lastSentTime = lastSent.time;
+    logger.info(`last sent at ${lastSentTime}`);
     // logger.info('I am running');
-    logger.info(feedItems);
+    // logger.info(feedItems);
 
     // Configure Github options to update Feed date
     const fileName = 'lastFetchDate.json';
     const fileLocation = '/contents/data/';
     const responseLocation = fileLocation;
-
+    const webmentions = JSON.parse(feedItems);
     let payload;
     let lastSentValue;
+    let item;
 
-    for (var key in feedItems) {
-        if (feedItems.hasOwnProperty(key)) {
-            logger.info(feedItems[key].date);
-            logger.info(feedItems[key].target);
+    for (item in webmentions) {
+        if (webmentions.hasOwnProperty(item)) {
+            logger.info(webmentions[item].date);
+            logger.info(webmentions[item].source);
+            logger.info(webmentions[item].target);
         }
     }
+
     // if () {
     //     // If it isn't, stop looping. (for each feed item?)
     //     // If it is, send the webmention target and source url to Telegraph
