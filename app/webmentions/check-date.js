@@ -1,5 +1,5 @@
 const logger = require(appRootDirectory + '/app/logging/bunyan');
-// const githubApi = require(appRootDirectory + '/app/github/post-to-api');
+const githubApi = require(appRootDirectory + '/app/github/post-to-api');
 const fs = require('fs');
 
 exports.checkDate = function checkDate(feedItems) {
@@ -7,8 +7,6 @@ exports.checkDate = function checkDate(feedItems) {
     const lastSent = JSON.parse(lastFetch);
     const lastSentTime = lastSent.time;
     logger.info(`last sent at ${lastSentTime}`);
-    // logger.info('I am running');
-    // logger.info(feedItems);
 
     // Configure Github options to update Feed date
     const fileName = 'lastFetchDate.json';
@@ -16,28 +14,32 @@ exports.checkDate = function checkDate(feedItems) {
     const responseLocation = fileLocation;
     const webmentions = JSON.parse(feedItems);
     let payload;
-    let lastSentValue;
     let item;
+    let tempTime = 0;
 
     for (item in webmentions) {
         if (webmentions.hasOwnProperty(item)) {
-            logger.info(webmentions[item].date);
-            logger.info(webmentions[item].source);
-            logger.info(webmentions[item].target);
+            if (webmentions[item].date > lastSentTime) {
+                // Send webmention
+                logger.info(`Webmention in article ${webmentions[item].source} on date ${webmentions[item].date} requires sending to ${webmentions[item].target}`);
+                // TODO: Code to send webmention HERE!
+
+                // Update temp time to the current post time
+                tempTime = webmentions[item].date;
+                logger.info(`Updating to the New Sent Time of: ${tempTime}`);
+            }
         }
     }
 
-    // if () {
-    //     // If it isn't, stop looping. (for each feed item?)
-    //     // If it is, send the webmention target and source url to Telegraph
-    //     // Once all items sent.
+    // Check to see if we sent any webmentions by checking if the tempTime has been updated.
+    if (tempTime > lastSentTime) {
+        // Now we need to update the file
+        payload = `{"time": "${tempTime}"}`;
+        logger.info(`Updating webmention last sent time in Github to ${tempTime}`);
+        // Push the update file back to github
+        // githubApi.publish(req, res, fileLocation, fileName, responseLocation, payload); <- Need to sort out routing!!
+    } else {
+        logger.info('No Webmentions found');
+    }
 
-    //     // - update the date-time to (the most recent feed item + 1 minute).
-    //     // payload = `{"time": "${lastSentValue}"}`;
-    //     // githubApi.publish(req, res, fileLocation, fileName, responseLocation, payload);
-    // } else {
-    //     logger.info('No Webmentions to send');
-    //     res.status(200);
-    //     res.send('Done');
-    // }
 };

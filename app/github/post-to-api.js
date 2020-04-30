@@ -30,7 +30,7 @@ exports.publish = function publish(req, res, fileLocation, fileName, responseLoc
             },
             content : payloadEncoded
         },
-        json  true
+        json :  true
     };
 
     function successful() {
