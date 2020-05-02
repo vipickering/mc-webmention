@@ -1,0 +1,33 @@
+{
+  "name": "vincentp.mc.sendwebmention",
+  "version": "1.0.0",
+  "description": "Mastr Cntrl Microservice to send webmentions",
+  "main": "https://mc-send-webmention.herokuapp.com/",
+  "author": "Vincent Pickering",
+  "homepage": "https://github.com/vipickering/mc-send-webmention#readme",
+  "license": "MIT",
+  "scripts": {
+    "start": "NODE_ENV=prod node ./bin/server.js | bunyan -o short",
+    "dev": "NODE_ENV=dev node ./bin/server.js | bunyan -o short"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vipickering/mc-send-webmention.git"
+  },
+  "engines": {
+    "node": "v12.16.2"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bunyan": "^1.8.12",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "request-promise": "^4.2.5",
+    "request": "^2.88.2",
+    "base64it": "^1.1.0",
+    "helmet": "^3.21.3"
+  }
+}
