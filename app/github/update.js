@@ -3,9 +3,9 @@ Update or Create a file in the Github API
 https://developer.github.com/v3/repos/contents/#create-or-update-a-file
 */
 
+const logger = require(appRootDirectory + '/app/logging/bunyan');
 const axios = require('axios');
 const base64 = require('base64it');
-const logger = require(appRootDirectory + '/app/logging/bunyan');
 const config = require(appRootDirectory + '/app/config.js');
 const github = config.github;
 const webmention = config.webmention;
@@ -34,8 +34,7 @@ exports.update = function update(payload, sha) {
                 committer : {
                     name : github.user,
                     email : github.email
-                },
-                branch : github.branch
+                }
             }
         };
 
@@ -44,9 +43,9 @@ exports.update = function update(payload, sha) {
             logger.info('GIT UPDATE Success');
         } catch (error) {
             logger.error(error);
+            logger.error(error.response);
             logger.info(error.response.data.message);
             logger.info('GIT PUT Failed');
         }
       })();
-
 };

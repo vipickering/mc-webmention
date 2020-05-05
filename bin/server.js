@@ -24,7 +24,7 @@ const intervalMins = webmention.interval;
 const interval = intervalMins * 60 * 1000;
 
 // Let's log how often we are checking webmentions
-logger.info(`Checking for available Webmentions every ${intervalMins} minutes`);
+logger.info(`Checking for Webmentions every ${intervalMins} minutes`);
 
 // The interval function runs every X mins to check the JSON feed for new webmentions to send.
 setInterval(function intervalTimer() {

@@ -1,3 +1,11 @@
+/*
+Perform a GET:
+- On the last sent date file in the GithubAPI
+- To get the feed of webmention items
+
+Then pass those items to the Parse Feed funcntion
+*/
+
 const logger = require(appRootDirectory + '/app/logging/bunyan');
 const config = require(appRootDirectory + '/app/config.js');
 const parseFeed = require(appRootDirectory + '/app/webmentions/parseFeed');
@@ -29,5 +37,9 @@ exports.check = function check() {
 
             // Pass this to the parseFeed function
             parseFeed.check(lastDate, feedItems);
-        }));
+        }))
+        .catch(function fail(error) {
+            logger.error(error);
+            logger.info('GIT GET Failed');
+        });
 };

@@ -1,4 +1,9 @@
-// Send to Telegraph code here
+/*
+POST the found webmention to Telegraph service
+https://telegraph.p3k.io/
+*/
+
+const logger = require(appRootDirectory + '/app/logging/bunyan');
 const config = require(appRootDirectory + '/app/config.js');
 
 exports.send = function send(feedItem) {
