@@ -7,7 +7,7 @@ If new items are found, update the last sent date to the latest item in the feed
 
 const logger = require(appRootDirectory + '/app/logging/bunyan');
 const base64 = require('base64it');
-// const webmentions = require(appRootDirectory + '/app/webmentions/send');
+const webmentions = require(appRootDirectory + '/app/webmentions/send');
 const lastFetchDate = require(appRootDirectory + '/app/github/update');
 
 exports.check = function check(lastDate, feedItems) {
@@ -29,7 +29,7 @@ exports.check = function check(lastDate, feedItems) {
         if (webmentionItems.hasOwnProperty(item)) {
             if (webmentionItems[item].date > lastSentTime) {
                 logger.info(`${webmentionItems[item].source} on date ${webmentionItems[item].date} sending to ${webmentionItems[item].target}`);
-                // webmentions.send(item);
+                webmentions.send(webmentionItems[item].source, webmentionItems[item].target);
                 tempTime = webmentionItems[item].date;
             }
         }
