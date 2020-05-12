@@ -22,10 +22,6 @@ config.webmention = {
     'lastSentPath' : process.env.WEBMENTION_LAST_PATH
 };
 
-config.website = {
-    'url' : process.env.WEBSITE_URL
-};
-
 config.telegraph = {
     'token' : process.env.TELEGRAPH_TOKEN,
     'url' : process.env.TELEGRAPH_URL
