@@ -1,14 +1,15 @@
 const express = require('express');
 require('dotenv').config();
+const favicon = require('serve-favicon');
 const path = require('path');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
-const rp = require('request-promise');
 
 appRootDirectory = path.join(__dirname, '/..');
 const config = require(appRootDirectory + '/app/config.js');
 const logger = require(appRootDirectory + '/app/logging/bunyan');
-const lastSent = require(appRootDirectory + '/app/webmentions/send-webmentions');
+const webmentions = require(appRootDirectory + '/app/webmentions/check');
+const routes = require(appRootDirectory + '/app/routes.js');
 
 const api = config.api;
 const webmention = config.webmention;
@@ -16,32 +17,23 @@ const port = api.port;
 const app = express();
 
 app.use(helmet());
+app.use(favicon('public/images/favicon.ico'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(express.json());
+app.use('/', routes);
 
 // Setup interval timer
 const intervalMins = webmention.interval;
 const interval = intervalMins * 60 * 1000;
 
-function githubFeedError(err) {
-    logger.info('Feed not availale');
-    logger.error(err);
-    // res.status(400);
-    // res.send('Feed GET failed');
-}
-
 // Let's log how often we are checking webmentions
-logger.info(`Checking for available Webmentions every ${intervalMins} minutes`);
+logger.info(`Checking for Webmentions every ${intervalMins} minutes`);
 
 // The interval function runs every X mins to check the JSON feed for new webmentions to send.
 setInterval(function intervalTimer() {
     logger.info('Checking feed for new Webmentions');
-
-    // Do a GET on the JSON feed to get webmentions list
-    rp(webmention.feed)
-        .then(lastSent.webmention)
-        .catch(githubFeedError);
+    webmentions.check();
 }, interval);
 
 const server = app.listen(process.env.PORT || port, function serveTheThings() {

@@ -2,7 +2,7 @@
 const config = {};
 
 config.github = {
-    'postUrl' : process.env.GITHUB_HOST + '/repos/' + process.env.GITHUB_NAME + '/' + process.env.GITHUB_REPO,
+    'postUrl' : process.env.GITHUB_HOST + '/repos/' + process.env.GITHUB_NAME + '/' + process.env.GITHUB_REPO + '/contents',
     'key' : process.env.GITHUB_KEY,
     'repo' : process.env.GITHUB_REPO,
     'name' : process.env.GITHUB_NAME,
@@ -18,11 +18,8 @@ config.api = {
 
 config.webmention = {
     'feed' : process.env.WEBMENTION_FEED,
-    'interval' : process.env.INTERVAL_DURATION
-};
-
-config.website = {
-    'url' : process.env.WEBSITE_URL
+    'interval' : process.env.INTERVAL_DURATION,
+    'lastSentPath' : process.env.WEBMENTION_LAST_PATH
 };
 
 config.telegraph = {
