@@ -8,7 +8,7 @@ Then pass those items to the Parse Feed funcntion
 
 const logger = require(appRootDirectory + '/app/logging/bunyan');
 const config = require(appRootDirectory + '/app/config.js');
-const parseFeed = require(appRootDirectory + '/app/webmentions/parseFeed');
+const parseFeed = require(appRootDirectory + '/app/webmentions/send/parseFeed');
 const axios = require('axios');
 
 exports.check = function check() {

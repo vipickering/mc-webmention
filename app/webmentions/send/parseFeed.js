@@ -7,7 +7,7 @@ If new items are found, update the last sent date to the latest item in the feed
 
 const logger = require(appRootDirectory + '/app/logging/bunyan');
 const base64 = require('base64it');
-const webmentions = require(appRootDirectory + '/app/webmentions/send');
+const webmentions = require(appRootDirectory + '/app/webmentions/send/deliver');
 const lastFetchDate = require(appRootDirectory + '/app/github/update');
 
 exports.check = function check(lastDate, feedItems) {

@@ -1,5 +1,5 @@
 /*
-Update or Create the last date file in the Github API
+Write Wrbmention to the target Repo in the Github API
 https://developer.github.com/v3/repos/contents/#create-or-update-a-file
 */
 
@@ -8,13 +8,12 @@ const axios = require('axios');
 const base64 = require('base64it');
 const config = require(appRootDirectory + '/app/config.js');
 const github = config.github;
-const webmention = config.webmention;
-const webmentionRepo = config.webmentionRepo;
+const targetRepo = config.targetRepo;
 
-exports.update = function update(payload, sha) {
-    const payloadEncoded = base64.encode(payload);
-    const urlDestination = `${webmentionRepo.postUrl}/${webmention.lastSentPath}`;
-    const messageContent = ':robot: last sent datetime updated';
+exports.write = function write(webmention, fileName, filePath) {
+    const payloadEncoded = base64.encode(webmention);
+    const urlDestination = `${targetRepo.postUrl}/${filePath}/${fileName}`;
+    const messageContent = ':robot: Webmention saved';
 
     logger.info(urlDestination);
 
@@ -31,8 +30,8 @@ exports.update = function update(payload, sha) {
             data : {
                 message : messageContent,
                 content : payloadEncoded,
-                branch : webmentionRepo.branch,
-                sha : sha,
+                branch : targetRepo.branch,
+                // sha : sha,
                 committer : {
                     name : github.user,
                     email : github.email
@@ -42,7 +41,7 @@ exports.update = function update(payload, sha) {
 
         const response = await axios(options);
             logger.info(response);
-            logger.info('GIT UPDATE Success');
+            logger.info('GIT Webmention UPDATE Success');
         } catch (error) {
             logger.error(error);
             logger.error(error.response);
