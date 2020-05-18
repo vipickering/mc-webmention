@@ -1,5 +1,5 @@
 /*
-Write Wrbmention to the target Repo in the Github API
+Write Webmention to the target Repo in the Github API
 https://developer.github.com/v3/repos/contents/#create-or-update-a-file
 */
 
