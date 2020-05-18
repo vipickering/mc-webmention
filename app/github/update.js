@@ -41,7 +41,7 @@ exports.update = function update(payload, sha) {
         };
 
         const response = await axios(options);
-            logger.info(response);
+            // logger.info(response);
             logger.info('GIT UPDATE Success');
         } catch (error) {
             logger.error(error);
