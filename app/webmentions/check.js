@@ -14,7 +14,9 @@ const axios = require('axios');
 exports.check = function check() {
     const github = config.github;
     const webmention = config.webmention;
-    const urlDestination = `${github.postUrl}/${webmention.lastSentPath}`;
+    const webmentionRepo = config.webmentionRepo;
+
+    const urlDestination = `${webmentionRepo.postUrl}/${webmention.lastSentPath}`;
     const options = {
         headers : {
             Authorization : `token ${github.key}`,
