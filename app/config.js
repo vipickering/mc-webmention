@@ -2,14 +2,23 @@
 const config = {};
 
 config.github = {
-    'postUrl' : process.env.GITHUB_HOST + '/repos/' + process.env.GITHUB_NAME + '/' + process.env.GITHUB_REPO + '/contents',
+    'host' : process.env.GITHUB_HOST,
     'key' : process.env.GITHUB_KEY,
-    'repo' : process.env.GITHUB_REPO,
     'name' : process.env.GITHUB_NAME,
     'user' : process.env.GITHUB_USER,
-    'email' : process.env.GITHUB_USER_EMAIL,
-    'host' : process.env.GITHUB_HOST,
-    'branch' : process.env.GITHUB_BRANCH
+    'email' : process.env.GITHUB_USER_EMAIL
+};
+
+config.webmentionRepo = {
+    'repo' : process.env.WEBMENTION_REPO,
+    'branch' : process.env.WEBMENTION_BRANCH,
+    'postUrl' : process.env.GITHUB_HOST + '/repos/' + process.env.GITHUB_NAME + '/' + process.env.WEBMENTION_REPO + '/contents'
+};
+
+config.targetRepo = {
+    'repo' : process.env.TARGET_REPO,
+    'branch' : process.env.TARGET_BRANCH,
+    'postUrl' : process.env.GITHUB_HOST + '/repos/' + process.env.GITHUB_NAME + '/' + process.env.TARGET_REPO + '/contents/src/_data'
 };
 
 config.api = {
@@ -19,7 +28,11 @@ config.api = {
 config.webmention = {
     'feed' : process.env.WEBMENTION_FEED,
     'interval' : process.env.INTERVAL_DURATION,
-    'lastSentPath' : process.env.WEBMENTION_LAST_PATH
+    'lastSentPath' : process.env.WEBMENTION_PATH
+};
+
+config.webmentionIO = {
+    'webhookToken' : process.env.WEBMENTION_WEBHOOK_TOKEN
 };
 
 config.telegraph = {
