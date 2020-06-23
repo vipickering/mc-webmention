@@ -32,10 +32,11 @@ exports.check = function check() {
         axios.get(webmention.feed)
     ])
         .then(axios.spread((lastDate, feedItems) => {
+            // logger.info(lastDate.data);
             logger.info(lastDate.data.sha);
             // logger.info(lastDate.data.content); // base64 decode this.
             // logger.info(base64.decode(lastDate.data.content));
-            logger.info(feedItems.data);
+            // logger.info(feedItems.data);
 
             // Pass this to the parseFeed function
             parseFeed.check(lastDate, feedItems);
