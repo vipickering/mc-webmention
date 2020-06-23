@@ -31,21 +31,22 @@ exports.update = function update(payload, sha) {
             data : {
                 message : messageContent,
                 content : payloadEncoded,
-                branch : webmentionRepo.branch,
                 sha : sha,
+                branch : webmentionRepo.branch,
                 committer : {
                     name : github.user,
                     email : github.email
                 }
             }
         };
-
+        logger.info(options);
         const response = await axios(options);
             // logger.info(response);
             logger.info('GIT UPDATE Success');
         } catch (error) {
-            logger.error(error);
-            logger.error(error.response);
+            // logger.error(error);
+            // logger.error(error.response);
+
             logger.info(error.response.data.message);
             logger.info('GIT PUT Failed');
         }
