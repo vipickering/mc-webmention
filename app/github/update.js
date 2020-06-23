@@ -12,6 +12,7 @@ const webmention = config.webmention;
 const webmentionRepo = config.webmentionRepo;
 
 exports.update = function update(payload, sha) {
+    logger.info(payload);
     const payloadEncoded = base64.encode(payload);
     const urlDestination = `${webmentionRepo.postUrl}/${webmention.lastSentPath}`;
     const messageContent = ':robot: last sent datetime updated';
@@ -39,7 +40,7 @@ exports.update = function update(payload, sha) {
                 }
             }
         };
-        logger.info(options);
+        // logger.info(options);
         const response = await axios(options);
             // logger.info(response);
             logger.info('GIT UPDATE Success');
