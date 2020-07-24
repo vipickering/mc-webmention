@@ -18,7 +18,7 @@ exports.check = function check(lastDate, feedItems) {
     let item;
     let tempTime = 0;
 
-    logger.info(`last sent at ${lastSentTime}`);
+    // logger.info(`last sent at ${lastSentTime}`);
     /*
     Loop over the feed and look for new webmentions
     If a new webmention is found:
@@ -28,7 +28,7 @@ exports.check = function check(lastDate, feedItems) {
     for (item in webmentionItems) {
         if (webmentionItems.hasOwnProperty(item)) {
             if (webmentionItems[item].date > lastSentTime) {
-                logger.info(`${webmentionItems[item].source} on date ${webmentionItems[item].date} sending to ${webmentionItems[item].target}`);
+                // logger.info(`${webmentionItems[item].source} on date ${webmentionItems[item].date} sending to ${webmentionItems[item].target}`);
                 webmentions.send(webmentionItems[item].source, webmentionItems[item].target);
                 tempTime = webmentionItems[item].date;
             }
@@ -40,7 +40,7 @@ exports.check = function check(lastDate, feedItems) {
     */
     if (tempTime > lastSentTime) {
         const payload = `{"time" : "${tempTime}"}`;
-        logger.info(`Updating webmention last sent time to ${tempTime}`);
+        // logger.info(`Updating webmention last sent time to ${tempTime}`);
         lastFetchDate.update(payload, lastDate.data.sha);
     } else {
         logger.info('No Webmentions found');
