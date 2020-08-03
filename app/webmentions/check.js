@@ -25,7 +25,8 @@ exports.check = function check() {
         }
     };
 
-    logger.info(urlDestination);
+    // logger.info(urlDestination);
+
     // GET the most recent sent date and the feed of webmentions
     axios.all([
         axios.get(urlDestination, options),
@@ -33,7 +34,7 @@ exports.check = function check() {
     ])
         .then(axios.spread((lastDate, feedItems) => {
             // logger.info(lastDate.data);
-            logger.info(lastDate.data.sha);
+            // logger.info(lastDate.data.sha);
             // logger.info(lastDate.data.content); // base64 decode this.
             // logger.info(base64.decode(lastDate.data.content));
             // logger.info(feedItems.data);
