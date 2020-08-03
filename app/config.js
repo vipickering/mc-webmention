@@ -32,7 +32,7 @@ config.webmention = {
 };
 
 config.webmentionIO = {
-    'webhookToken' : process.env.WEBMENTION_WEBHOOK_TOKEN
+    'webhookToken' : process.env.WEBMENTIONIO_WEBHOOK_TOKEN
 };
 
 config.telegraph = {
