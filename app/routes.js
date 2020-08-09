@@ -7,8 +7,6 @@ const tokenChallenge = require(appRootDirectory + '/app/webmentions/token');
 /***
 GET Routes
 ***/
-router.get('/check-webmention/:token', tokenChallenge.challenge, findWebmentions.check);
-
 router.get('/', (req, res) => {
     res.json(serviceProfile);
 });
@@ -17,5 +15,6 @@ router.get('/', (req, res) => {
 POST Routes
 ***/
 router.post('/post-webmention', receiveWebmention.webmentionPost);
+router.post('/check-webmention/:token', tokenChallenge.challenge, findWebmentions.check);
 
 module.exports = router;
