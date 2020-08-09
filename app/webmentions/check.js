@@ -25,6 +25,7 @@ exports.check = function check() {
         }
     };
 
+    logger.info('Checking feed for new Webmentions');
     // logger.info(urlDestination);
 
     // GET the most recent sent date and the feed of webmentions

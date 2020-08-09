@@ -12,7 +12,8 @@ config.github = {
 config.webmentionRepo = {
     'repo' : process.env.WEBMENTION_REPO,
     'branch' : process.env.WEBMENTION_BRANCH,
-    'postUrl' : process.env.GITHUB_HOST + '/repos/' + process.env.GITHUB_NAME + '/' + process.env.WEBMENTION_REPO + '/contents'
+    'postUrl' : process.env.GITHUB_HOST + '/repos/' + process.env.GITHUB_NAME + '/' + process.env.WEBMENTION_REPO + '/contents',
+    'token' : process.env.WEBMENTION_ROUTE_TOKEN
 };
 
 config.targetRepo = {
