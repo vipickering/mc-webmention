@@ -2,7 +2,7 @@ const express = require('express');
 const router = new express.Router();
 const serviceProfile = require(appRootDirectory + '/app/data/serviceProfile.json');
 const receiveWebmention = require(appRootDirectory + '/app/webmentions/receive/save');
-const findWebmentions = require(appRootDirectory + '/app/webmentions/check');
+const findWebmentions = require(appRootDirectory + '/app/security/check');
 const tokenChallenge = require(appRootDirectory + '/app/webmentions/token');
 /***
 GET Routes
