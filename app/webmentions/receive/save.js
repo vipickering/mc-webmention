@@ -2,6 +2,7 @@ const logger = require(appRootDirectory + '/app/logging/bunyan');
 const config = require(appRootDirectory + '/app/config.js');
 const saveWebmention = require(appRootDirectory + '/app/github/saveWebmention');
 const webmentionIOToken = config.webmentionIO.webhookToken;
+const slack = require(appRootDirectory + '/app/slack/post-message-slack');
 
 exports.webmentionPost = function webmentionPost(req, res) {
     let filePath;
@@ -76,6 +77,7 @@ exports.webmentionPost = function webmentionPost(req, res) {
         saveWebmention.write(webmention, fileName, filePath);
     } else {
         logger.info('authorisation failed');
+        slack.sendMessage('Webmention save failed, check logs');
         res.status(400);
         res.send('Secret incorrect');
     }

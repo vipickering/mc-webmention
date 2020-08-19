@@ -41,4 +41,8 @@ config.telegraph = {
     'url' : process.env.TELEGRAPH_URL
 };
 
+config.slack = {
+    'token' : process.env.SLACK_TOKEN
+};
+
 module.exports = config;
