@@ -27,7 +27,6 @@ config.api = {
 
 config.webmention = {
     'feed' : process.env.WEBMENTION_FEED,
-    'interval' : process.env.INTERVAL_DURATION,
     'lastSentPath' : process.env.WEBMENTION_PATH,
     'token' : process.env.WEBMENTION_ROUTE_TOKEN
 };
