@@ -12,8 +12,7 @@ config.github = {
 config.webmentionRepo = {
     'repo' : process.env.WEBMENTION_REPO,
     'branch' : process.env.WEBMENTION_BRANCH,
-    'postUrl' : process.env.GITHUB_HOST + '/repos/' + process.env.GITHUB_NAME + '/' + process.env.WEBMENTION_REPO + '/contents',
-    'token' : process.env.WEBMENTION_ROUTE_TOKEN
+    'postUrl' : process.env.GITHUB_HOST + '/repos/' + process.env.GITHUB_NAME + '/' + process.env.WEBMENTION_REPO + '/contents'
 };
 
 config.targetRepo = {
@@ -29,7 +28,8 @@ config.api = {
 config.webmention = {
     'feed' : process.env.WEBMENTION_FEED,
     'interval' : process.env.INTERVAL_DURATION,
-    'lastSentPath' : process.env.WEBMENTION_PATH
+    'lastSentPath' : process.env.WEBMENTION_PATH,
+    'token' : process.env.WEBMENTION_ROUTE_TOKEN
 };
 
 config.webmentionIO = {

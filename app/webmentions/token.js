@@ -2,7 +2,7 @@ const config = require(appRootDirectory + '/app/config.js');
 
 exports.challenge = function challenge(req, res, next) {
     const submittedToken = req.params.token;
-    const token = config.webmentionRepo.token;
+    const token = config.webmention.token;
 
     if (submittedToken !== token) {
         res.status(401);
