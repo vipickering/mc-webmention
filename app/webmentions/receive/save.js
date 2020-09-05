@@ -1,13 +1,15 @@
 const logger = require(appRootDirectory + '/app/logging/bunyan');
 const config = require(appRootDirectory + '/app/config.js');
 const saveWebmention = require(appRootDirectory + '/app/github/saveWebmention');
-const webmentionIO = config.webmentionIO;
+const webmentionIOToken = config.webmentionIO.webhookToken;
+const slack = require(appRootDirectory + '/app/slack/post-message-slack');
 
 exports.webmentionPost = function webmentionPost(req, res) {
     let filePath;
     let webmentionFileName;
     let webmentionId;
     const webmention = req.body.post;
+    const webmentionSecret = req.body.secret;
     const webmentionTypeReceived = webmention['wm-property'];
     const webmentionType = {
         'bookmark-of' : {
@@ -36,7 +38,10 @@ exports.webmentionPost = function webmentionPost(req, res) {
         }
     };
 
-    if (req.body.secret === webmentionIO.webhookToken) {
+    logger.info(`secret ${webmentionSecret}`);
+    logger.info(`webmention token ${webmentionIOToken}`);
+
+    if (webmentionSecret === webmentionIOToken) {
         // Log request and WM properties  so easy to find
         logger.info('Webmention Debug: ' + JSON.stringify(req.body));
         logger.info(`Webmention Properties: ${webmentionTypeReceived} `);
@@ -72,6 +77,7 @@ exports.webmentionPost = function webmentionPost(req, res) {
         saveWebmention.write(webmention, fileName, filePath);
     } else {
         logger.info('authorisation failed');
+        slack.sendMessage('Webmention save failed, check logs');
         res.status(400);
         res.send('Secret incorrect');
     }

@@ -12,7 +12,8 @@ config.github = {
 config.webmentionRepo = {
     'repo' : process.env.WEBMENTION_REPO,
     'branch' : process.env.WEBMENTION_BRANCH,
-    'postUrl' : process.env.GITHUB_HOST + '/repos/' + process.env.GITHUB_NAME + '/' + process.env.WEBMENTION_REPO + '/contents'
+    'postUrl' : process.env.GITHUB_HOST + '/repos/' + process.env.GITHUB_NAME + '/' + process.env.WEBMENTION_REPO + '/contents',
+    'token' : process.env.WEBMENTION_ROUTE_TOKEN
 };
 
 config.targetRepo = {
@@ -32,12 +33,16 @@ config.webmention = {
 };
 
 config.webmentionIO = {
-    'webhookToken' : process.env.WEBMENTION_WEBHOOK_TOKEN
+    'webhookToken' : process.env.WEBMENTIONIO_WEBHOOK_TOKEN
 };
 
 config.telegraph = {
     'token' : process.env.TELEGRAPH_TOKEN,
     'url' : process.env.TELEGRAPH_URL
+};
+
+config.slack = {
+    'token' : process.env.SLACK_TOKEN
 };
 
 module.exports = config;
