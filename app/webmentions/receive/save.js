@@ -38,6 +38,7 @@ exports.webmentionPost = function webmentionPost(req, res) {
         }
     };
 
+    logger.info(req);
     logger.info(`secret ${webmentionSecret}`);
     logger.info(`webmention token ${webmentionIOToken}`);
 
@@ -78,6 +79,7 @@ exports.webmentionPost = function webmentionPost(req, res) {
     } else {
         logger.info('authorisation failed');
         slack.sendMessage('Webmention save failed, check logs');
+        slack.sendMessage(req);
         res.status(400);
         res.send('Secret incorrect');
     }
