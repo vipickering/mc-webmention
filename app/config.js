@@ -31,10 +31,6 @@ config.webmention = {
     'token' : process.env.WEBMENTION_ROUTE_TOKEN
 };
 
-config.webmentionIO = {
-    'webhookToken' : process.env.WEBMENTIONIO_WEBHOOK_TOKEN
-};
-
 config.telegraph = {
     'token' : process.env.TELEGRAPH_TOKEN,
     'url' : process.env.TELEGRAPH_URL

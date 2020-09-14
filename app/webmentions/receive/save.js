@@ -1,7 +1,5 @@
 const logger = require(appRootDirectory + '/app/logging/bunyan');
-const config = require(appRootDirectory + '/app/config.js');
 const saveWebmention = require(appRootDirectory + '/app/github/saveWebmention');
-const webmentionIOToken = config.webmentionIO.webhookToken;
 const slack = require(appRootDirectory + '/app/slack/post-message-slack');
 
 exports.webmentionPost = function webmentionPost(req, res) {
@@ -9,7 +7,6 @@ exports.webmentionPost = function webmentionPost(req, res) {
     let webmentionFileName;
     let webmentionId;
     const webmention = req.body.post;
-    const webmentionSecret = req.body.secret;
     const webmentionTypeReceived = webmention['wm-property'];
     const webmentionType = {
         'bookmark-of' : {
@@ -38,49 +35,36 @@ exports.webmentionPost = function webmentionPost(req, res) {
         }
     };
 
-    logger.info(req);
-    logger.info(`secret ${webmentionSecret}`);
-    logger.info(`webmention token ${webmentionIOToken}`);
+    // 1. Get the webmention type and assign it the extra properties we need
+    const webmentionProperties = webmentionType[webmentionTypeReceived];
 
-    if (webmentionSecret === webmentionIOToken) {
-        // Log request and WM properties  so easy to find
-        logger.info('Webmention Debug: ' + JSON.stringify(req.body));
-        logger.info(`Webmention Properties: ${webmentionTypeReceived} `);
-
-        // 1. Get the webmention type and assign it the extra properties we need
-        const webmentionProperties = webmentionType[webmentionTypeReceived];
-
-        // 2. Wrap in a try/catch just in case something went wrong, then we can just assign an 'unknown' value and manually fix later
-        // TEMP code to monitor wrapped in an try/catch
-        try { // Is Swarm sending these?
-            webmentionId = webmention['wm-id'][0];
-        } catch (e) {
-            logger.info('wm-id [0] failed');
-        }
-
-        try {
-            webmentionId = webmention['wm-id'];
-        } catch (e) {
-            logger.info('wm-id failed');
-        }
-        // End TEMP Code
-
-        try {
-            filePath = webmentionProperties.filePath;
-            webmentionFileName = webmentionProperties.webmentionFileName;
-        } catch (e) {
-            filePath = 'unknown';
-            webmentionFileName = 'unknown';
-        }
-
-        // 3. Now we have worked that out we can create the file name and assign the file path when saving in Github
-        const fileName = `${webmentionFileName}_${webmentionId}.json`;
-        saveWebmention.write(webmention, fileName, filePath);
-    } else {
-        logger.info('authorisation failed');
-        slack.sendMessage('Webmention save failed, check logs');
-        slack.sendMessage(req);
-        res.status(400);
-        res.send('Secret incorrect');
+    // 2. Wrap in a try/catch just in case something went wrong, then we can just assign an 'unknown' value and manually fix later
+    // TEMP code to monitor wrapped in an try/catch
+    try { // Is Swarm sending these?
+        webmentionId = webmention['wm-id'][0];
+    } catch (e) {
+        slack.sendMessage('Webmention save wm-id [0] failed ');
+        logger.info('wm-id [0] failed');
     }
+
+    try {
+        webmentionId = webmention['wm-id'];
+    } catch (e) {
+        slack.sendMessage('Webmention save wm-id failed ');
+        logger.info('wm-id failed');
+    }
+    // End TEMP Code
+
+    try {
+        filePath = webmentionProperties.filePath;
+        webmentionFileName = webmentionProperties.webmentionFileName;
+    } catch (e) {
+        filePath = 'unknown';
+        webmentionFileName = 'unknown';
+    }
+
+    // 3. Now we have worked that out we can create the file name and assign the file path when saving in Github
+    const fileName = `${webmentionFileName}_${webmentionId}.json`;
+    saveWebmention.write(webmention, fileName, filePath);
+    slack.sendMessage('Webmention saved');
 };
