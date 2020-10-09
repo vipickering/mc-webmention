@@ -10,6 +10,7 @@ const logger = require(appRootDirectory + '/app/logging/bunyan');
 const config = require(appRootDirectory + '/app/config.js');
 const parseFeed = require(appRootDirectory + '/app/webmentions/send/parseFeed');
 const base64 = require('base64it');
+const slack = require(appRootDirectory + '/app/slack/post-message-slack');
 const axios = require('axios');
 
 exports.check = function check() {
@@ -47,5 +48,6 @@ exports.check = function check() {
         .catch(function fail(error) {
             logger.error(error);
             logger.info('GIT GET Failed');
+            slack.sendMessage('Failed to get feed or last update time, check logs');
         });
 };
