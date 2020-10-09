@@ -9,7 +9,6 @@ Then pass those items to the Parse Feed funcntion
 const logger = require(appRootDirectory + '/app/logging/bunyan');
 const config = require(appRootDirectory + '/app/config.js');
 const parseFeed = require(appRootDirectory + '/app/webmentions/send/parseFeed');
-const base64 = require('base64it');
 const slack = require(appRootDirectory + '/app/slack/post-message-slack');
 const axios = require('axios');
 
@@ -24,6 +23,9 @@ exports.check = function check() {
             Authorization : `token ${github.key}`,
             'Content-Type' : 'application/vnd.github.v3+json; charset=UTF-8',
             'User-Agent' : github.name
+        },
+        data : {
+            branch : webmentionRepo.branch
         }
     };
 
@@ -36,10 +38,7 @@ exports.check = function check() {
         axios.get(webmention.feed)
     ])
         .then(axios.spread((lastDate, feedItems) => {
-            logger.info(lastDate.data);
             logger.info(lastDate.data.sha);
-            logger.info(lastDate.data.content); // base64 decode this.
-            logger.info(base64.decode(lastDate.data.content)); // Looks like I am passing in the whole object, not the value.
             logger.info(feedItems.data);
 
             // Pass this to the parseFeed function

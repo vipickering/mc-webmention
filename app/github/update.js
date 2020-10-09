@@ -41,9 +41,9 @@ exports.update = function update(payload, sha) {
                 }
             }
         };
-        logger.info(options);
+        // logger.info(options);
         const response = await axios(options);
-            logger.info(response);
+            // logger.info(response);
             logger.info('GIT UPDATE Success');
             slack.sendMessage('Webmention last sent time saved');
         } catch (error) {
