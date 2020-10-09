@@ -10,6 +10,7 @@ const config = require(appRootDirectory + '/app/config.js');
 const github = config.github;
 const webmention = config.webmention;
 const webmentionRepo = config.webmentionRepo;
+const slack = require(appRootDirectory + '/app/slack/post-message-slack');
 
 exports.update = function update(payload, sha) {
     logger.info(payload);
@@ -40,16 +41,18 @@ exports.update = function update(payload, sha) {
                 }
             }
         };
-        // logger.info(options);
+        logger.info(options);
         const response = await axios(options);
-            // logger.info(response);
+            logger.info(response);
             logger.info('GIT UPDATE Success');
+            slack.sendMessage('Webmention last sent time saved');
         } catch (error) {
             // logger.error(error);
-            // logger.error(error.response);
+            logger.error(error.response);
 
             logger.info(error.response.data.message);
             logger.info('GIT PUT Failed');
+            slack.sendMessage('Webmention last sent time Failed, check logs');
         }
       })();
 };
