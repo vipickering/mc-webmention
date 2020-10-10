@@ -8,8 +8,7 @@ Mastr Cntrl Webmention is a part of a Microservices suite of [IndieWeb](https://
 
 ## Purpose
 
-The service polls a JSON feed once every 10 mins (interval configurable) to check for content that has not been sent.
-If it finds any new content it will:
+This service has a configurable webhook URL, designed to be triggered when your static website is built. POSTing to that URL will trigger the service to look in your location for a JSON feed, once found it will:
 
 1. Loop through the items and forward the source/target content on to Telegraph, for sending.
 2. Then update the last sent time.

@@ -4,6 +4,7 @@ const serviceProfile = require(appRootDirectory + '/app/data/serviceProfile.json
 const receiveWebmention = require(appRootDirectory + '/app/webmentions/receive/save');
 const findWebmentions = require(appRootDirectory + '/app/security/check');
 const tokenChallenge = require(appRootDirectory + '/app/webmentions/token');
+
 /***
 GET Routes
 ***/
