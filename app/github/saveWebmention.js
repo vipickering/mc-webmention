@@ -11,6 +11,9 @@ const github = config.github;
 const targetRepo = config.targetRepo;
 
 exports.write = function write(webmention, fileName, filePath) {
+    logger.info(`Raw Webmention ${webmention}`);
+    JSON.parse(webmention);
+    logger.info(`Webmention parsed ${webmention}`);
     const payloadEncoded = base64.encode(webmention);
     const urlDestination = `${targetRepo.postUrl}/${filePath}/${fileName}`;
     const messageContent = ':robot: Webmention saved';
@@ -31,7 +34,6 @@ exports.write = function write(webmention, fileName, filePath) {
                 message : messageContent,
                 content : payloadEncoded,
                 branch : targetRepo.branch,
-                // sha : sha,
                 committer : {
                     name : github.user,
                     email : github.email
